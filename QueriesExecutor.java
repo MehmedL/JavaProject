@@ -45,7 +45,7 @@ public class QueriesExecutor {
                 int personId = rs.getInt("PersonID");
 
                 System.out.println("ID: " + id + ", CriminalNUM: " + criminalNum + ", PersonID: " + personId);
-            }
+            }// Вместо това да се извиква printTable за таблица Criminal
         } catch (SQLException e) {
             System.out.println("Error while executing the query.");
         }
@@ -81,7 +81,7 @@ public class QueriesExecutor {
                         int personId = rs.getInt("PersonID");
 
                         System.out.println("ID: " + id + ", CriminalNUM: " + criminalNum + ", PersonID: " + personId);
-                    }
+                    }// И тук да стане с извикване на метод
                 } catch (SQLException e) {
                     System.out.println("Error while executing the query.");
                 }
@@ -91,21 +91,8 @@ public class QueriesExecutor {
 
                     System.out.println();
 
-                    while (rs.next()) { // Изкарва резултатите
-                        int id = rs.getInt("ID");
-                        String crimeNum = rs.getString("CrimeNUM");
-                        String crimeType = rs.getString("CrimeType");
-                        String date = rs.getString("CommitDate");
-                        String closure = rs.getString("Closure");
-                        int criminalId = rs.getInt("CriminalID");
-                        int victimId = rs.getInt("VictimID");
-                        int officerId = rs.getInt("PoliceOfficerID");
-                        String department = rs.getString("DepartmentID");
-
-                        System.out.println("ID: " + id + ", Crime №: " + crimeNum + ", Crime Type: " + crimeType + ", Commit date: " + date
-                                + ", Closure: " + closure + ", Criminal ID: " + criminalId + ", Victim ID: " + victimId + ", Police Officer ID: " + officerId
-                                + ", Department Name: " + department);
-                    }
+                    DisplayingExe.printTable(rs, tableName);
+                    // DisplayingExe получава rs и името на таблицата, която трябва да бъде изкарана в конзолата
                 } catch (SQLException e) {
                     System.out.println("Error while executing the query.");
                 }

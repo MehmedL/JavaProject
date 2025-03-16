@@ -1,37 +1,31 @@
-import java.sql.Connection;
 import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.SQLException;
 
 public class DisplayingExe {
     // Метод за извеждане на таблица на конзолата
-    public void printTable(String query, Connection connection) {
-        if (connection == null) {
-            System.out.println("Няма активна връзка с базата данни.");
-            return;
-        }
+    public static void printTable(ResultSet rs, String tableName) {
+        try {
+            while (rs.next()) { // Добавяме rs.next(), за да четем редовете
+                if (tableName.equals("Crimе")) {
+                    int id = rs.getInt("ID");
+                    String crimeNum = rs.getString("CrimeNUM");
+                    String crimeType = rs.getString("CrimeType");
+                    String date = rs.getString("CommitDate");
+                    String closure = rs.getString("Closure");
+                    int criminalId = rs.getInt("CriminalID");
+                    int victimId = rs.getInt("VictimID");
+                    int officerId = rs.getInt("PoliceOfficerID");
+                    String department = rs.getString("DepartmentID");
 
-        try (Statement statement = connection.createStatement();
-             ResultSet resultSet = statement.executeQuery(query)) {
-
-            // Брой колони в резултата
-            int columnCount = resultSet.getMetaData().getColumnCount();
-
-            // Заглавия на колоните
-            for (int i = 1; i <= columnCount; i++) {
-                System.out.print(resultSet.getMetaData().getColumnName(i) + "\t");
-            }
-            System.out.println();
-
-            // Данни от редовете
-            while (resultSet.next()) {
-                for (int i = 1; i <= columnCount; i++) {
-                    System.out.print(resultSet.getString(i) + "\t");
+                    System.out.println("ID: " + id + ", Crime №: " + crimeNum + ", Crime Type: " + crimeType + ", Commit date: " + date
+                            + ", Closure: " + closure + ", Criminal ID: " + criminalId + ", Victim ID: " + victimId + ", Police Officer ID: " + officerId
+                            + ", Department Name: " + department);
                 }
-                System.out.println();
             }
-
-        } catch (Exception e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
 }
+
+// Трябва по аналогичен начин да се добави идкарването на всяка таблица

@@ -93,3 +93,5 @@ public class InsertionExe {
     }
 }
 
+// По аналогичен начин трябва да се добави insertPolice
+

@@ -57,7 +57,7 @@ public class SqlConnections {
                     System.out.println("4. Изход");
 
                     operation = scanner.nextInt();
-                }
+                }// Още два if за другите две роли
             }
 
         } catch (SQLException e) {
