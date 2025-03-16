@@ -17,6 +17,27 @@ public class Main {
 
         SqlConnections sqlConnections = new SqlConnections();
         sqlConnections.connection(prefixedUsername, password);
+//=========================================================================================
+//Test
+        // Създаване на обект от класа за връзка с базата
+        DatabaseConnector dbConnector = new DatabaseConnector();
+        Connection connection = dbConnector.getConnection();
+
+        // SQL заявка за извеждане на таблица
+        String query = "SELECT * FROM test.person";
+
+        // Създаване на обект от TablePrinter и извеждане на данните
+        DisplayingExe displayingExe = new DisplayingExe();
+        displayingExe.printTable(query, connection);
+
+        // Затваряне на връзката
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 }
