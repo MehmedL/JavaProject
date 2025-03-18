@@ -21,6 +21,53 @@ public class DisplayingExe {
                             + ", Closure: " + closure + ", Criminal ID: " + criminalId + ", Victim ID: " + victimId + ", Police Officer ID: " + officerId
                             + ", Department Name: " + department);
                 }
+                else if(tableName.equals("Victim"))
+                {
+                    int id = rs.getInt("ID");
+                    String victimNUM = rs.getString("VictimNum");
+                    int personID = rs.getInt("PersonID");
+
+                    System.out.println("ID: " + id + ", Victim №: " + victimNUM + "PersonID: " + personID);
+                }
+                else if(tableName.equals("Person"))
+                {
+                    int id = rs.getInt("ID");
+                    int EGN = rs.getInt("EGN");
+                    String firstName = rs.getString("FirstName");
+                    String middleName = rs.getString("MiddleName");
+                    String lastName = rs.getString("LastName");
+                    String birthDate = rs.getString("BirthDate");
+                    String sex = rs.getString("Sex");
+
+                    System.out.println("ID: " + id + ", EGN: " + EGN + ", FirstName:" + firstName + ", MiddleName:" + middleName + ", LastName:" + lastName
+                    + ", BirthDate:" + birthDate + ", Sex:" + sex);
+                }
+                else if(tableName.equals("Policeofficer"))
+                {
+                    int id = rs.getInt("ID");
+                    String officerBadgeNum =rs.getString("OfficerBadgeNum");
+                    String officerRank = rs.getString("OfficerRank");
+                    int personId = rs.getInt("PersonId");
+                    int departmentID = rs.getInt("DepartmentId");
+
+                    System.out.println("ID:" + id + ", OfficerBadgeNum:" + officerBadgeNum + ", OfficerRank:"
+                    + officerRank+ ", PersonId:" + personId + ", DepartmentId:" +departmentID );
+                }
+                else if(tableName.equals("Criminal"))
+                {
+                    int id = rs.getInt("ID");
+                    String criminalNum = rs.getString("CriminalNum");
+                    int personId = rs.getInt("PersonId");
+
+                    System.out.println("ID:" + id + ", CriminalNum:" + criminalNum + ", PersonID:" + personId);
+                }
+                else if(tableName.equals("Department"))
+                {
+                    int id = rs.getInt("ID");
+                    String departmentName = rs.getString("DepartmentName");
+
+                    System.out.println("ID:" + id + ", Der" + ", DepartmentName:" + departmentName);
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
