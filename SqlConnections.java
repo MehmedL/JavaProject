@@ -22,7 +22,7 @@ public class SqlConnections {
                 Scanner scanner = new Scanner(System.in);
 
                 System.out.println();
-                System.out.println("1. Търсене");
+                System.out.println("1. Преглед");
                 System.out.println("2. Добавяне");
                 System.out.println("3. Редактиране");
                 System.out.println("4. Изход");
@@ -34,7 +34,7 @@ public class SqlConnections {
 
                     System.out.println();
                     System.out.println("1. Криминално проявени лица"); // a.k.a Престъпник/таблица Criminal ;)
-                    System.out.println("2. Престъпление");
+                    System.out.println("2. Престъпления");
 
                     int table = scanner.nextInt();
 
@@ -46,9 +46,9 @@ public class SqlConnections {
 
                     if(queriesExecutor.executeLieutenantQueries(operation, tableName) == -1){
                         break;
-                    }else{
-                        queriesExecutor.executeLieutenantQueries(operation, tableName);
                     }
+
+                    queriesExecutor.executeLieutenantQueries(operation, tableName);
 
                     System.out.println();
                     System.out.println("1. Преглед");
@@ -58,6 +58,10 @@ public class SqlConnections {
 
                     operation = scanner.nextInt();
                 }// Още два if за другите две роли
+            } else if (role != null && role.equals("`Captain`@`%`")) {
+                System.out.println("1. Нищо още");
+            }else if (role != null && role.equals("`Inspector`@`%`")) {
+                System.out.println("1. Нищо още");
             }
 
         } catch (SQLException e) {
