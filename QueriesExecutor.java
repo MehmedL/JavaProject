@@ -1,3 +1,4 @@
+import java.util.Scanner;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -38,51 +39,212 @@ public class QueriesExecutor {
 
             System.out.println();
 
-            DisplayingExe.printTable(rs, "Criminal");
+            while (rs.next()) {
+                int id = rs.getInt("ID");
+                String criminalNum = rs.getString("CriminalNUM");
+                int personId = rs.getInt("PersonID");
+
+                System.out.println("ID: " + id + ", CriminalNUM: " + criminalNum + ", PersonID: " + personId);
+            }// Вместо това да се извиква printTable за таблица Criminal
         } catch (SQLException e) {
             System.out.println("Error while executing the query.");
         }
     }
 
     public int executeLieutenantQueries(int operation, String tableName) {
+        if (operation < 1 && operation > 4) {
+            System.out.println("Invalid operation!");
+            return -1;
+        }
+
+        if (!tableName.equals("Criminal") && !tableName.equals("Crime")) {
+            System.out.println("Invalid table name!");
+            return -1;
+        }
+
+        Scanner scanner = new Scanner(System.in);
+
         String lieutenantQuery = "";
 
         if (operation == 1) {
             lieutenantQuery = "SELECT * FROM " + tableName;
 
-            try (PreparedStatement pstmt = connection.prepareStatement(lieutenantQuery);
-                 ResultSet rs = pstmt.executeQuery()) {
+            if (tableName.equals("Criminal")) {
+                try (PreparedStatement pstmt = connection.prepareStatement(lieutenantQuery);
+                     ResultSet rs = pstmt.executeQuery()) {
 
-                System.out.println(tableName);
+                    System.out.println();
 
-                DisplayingExe.printTable(rs, tableName);
-            } catch (SQLException e) {
-                System.out.println("Error while executing the query.");
+                    while (rs.next()) { // Изкарва резултатите
+                        int id = rs.getInt("ID");
+                        String criminalNum = rs.getString("CriminalNUM");
+                        int personId = rs.getInt("PersonID");
+
+                        System.out.println("ID: " + id + ", CriminalNUM: " + criminalNum + ", PersonID: " + personId);
+                    }// И тук да стане с извикване на метод
+                } catch (SQLException e) {
+                    System.out.println("Error while executing the query.");
+                }
+            } else {
+                try (PreparedStatement pstmt = connection.prepareStatement(lieutenantQuery);
+                     ResultSet rs = pstmt.executeQuery()) {
+
+                    System.out.println();
+
+                    DisplayingExe.printTable(rs, tableName);
+                    // DisplayingExe получава rs и името на таблицата, която трябва да бъде изкарана в конзолата
+                } catch (SQLException e) {
+                    System.out.println("Error while executing the query.");
+                }
+
+                // Двата while цикъла също трябва да са в отделни методи в DisplayingExe, но ми омръзна и ще ги правя друг ден
             }
 
             return operation;
         }
         else if (operation == 2) {
-            if(tableName.equals("Criminal")){
-                InsertionExe insertionExe = new InsertionExe(connection);
+            InsertionExe insertionExe = new InsertionExe(connection);
 
-                // Въвеждаме нов човек и получаваме неговото ID
-                int personId = insertionExe.insertPerson();
+            // Въвеждаме нов човек и получаваме неговото ID
+            int personId = insertionExe.insertPerson();
 
-                // Ако успешно сме въвели човек, добавяме го като криминално лице
-                if (personId != -1) {
-                    insertionExe.insertCriminal(personId);
-                } else {
-                    System.out.println("Failed to insert person.");
-                }
-
-                return operation;
-            } else{
-                System.out.println("Още няма направена функционалност а добавяне на престъпление.");
+            // Ако успешно сме въвели човек, добавяме го като криминално лице
+            if (personId != -1) {
+                insertionExe.insertCriminal(personId);
+            } else {
+                System.out.println("Failed to insert person.");
             }
 
+            return operation;
         }
         else if (operation == 4) return -1;
+        scanner.close();
+        return -1;
+    }
+    public int executeInspectorQueries(int operation, String tableName) {
+        if (operation < 1 && operation > 4) {
+            System.out.println("Invalid operation!");
+            return -1;
+        }
+
+        if (!tableName.equals("Crime")) {
+            System.out.println("Invalid table name!");
+            return -1;
+        }
+
+        Scanner scanner = new Scanner(System.in);
+
+        String InspectorQuery = "";
+
+        if (operation == 1) {
+            InspectorQuery = "SELECT * FROM " + tableName;
+
+                try (PreparedStatement pstmt = connection.prepareStatement(InspectorQuery);
+                     ResultSet rs = pstmt.executeQuery()) {
+
+                    System.out.println();
+
+                    DisplayingExe.printTable(rs, tableName);
+                    // DisplayingExe получава rs и името на таблицата, която трябва да бъде изкарана в конзолата
+                } catch (SQLException e) {
+                    System.out.println("Error while executing the query.");
+                }
+
+                // Двата while цикъла също трябва да са в отделни методи в DisplayingExe, но ми омръзна и ще ги правя друг ден
+
+
+            return operation;
+        }
+        else if (operation == 2) {
+            InsertionExe insertionExe = new InsertionExe(connection);
+
+            // Въвеждаме нов човек и получаваме неговото ID
+            int personId = insertionExe.insertPerson();
+
+            // Ако успешно сме въвели човек, добавяме го като криминално лице
+            if (personId != -1) {
+                insertionExe.insertCriminal(personId);
+            } else {
+                System.out.println("Failed to insert person.");
+            }
+
+            return operation;
+        }
+        else if (operation == 4) return -1;
+        scanner.close();
+        return -1;
+    }
+    // Според мен май трябва да ги разбием на още по отделни класове понеже става страшно черво!
+    //Не съм дописал метода executeCaptainQueries.
+
+    public int executeCaptainQueries(int operation, String tableName) {
+        if (operation < 1 && operation > 5) {
+            System.out.println("Invalid operation!");
+            return -1;
+        }
+
+        if (tableName.equals("Person")) {
+            System.out.println("Invalid table name!");
+            return -1;
+        }
+
+        Scanner scanner = new Scanner(System.in);
+
+        String CaptainQuery = "";
+
+        if (operation == 1) {
+            CaptainQuery = "SELECT * FROM " + tableName;
+
+            if (tableName.equals("Criminal")) {
+                try (PreparedStatement pstmt = connection.prepareStatement(CaptainQuery);
+                     ResultSet rs = pstmt.executeQuery()) {
+
+                    System.out.println();
+
+                    while (rs.next()) { // Изкарва резултатите
+                        int id = rs.getInt("ID");
+                        String criminalNum = rs.getString("CriminalNUM");
+                        int personId = rs.getInt("PersonID");
+
+                        System.out.println("ID: " + id + ", CriminalNUM: " + criminalNum + ", PersonID: " + personId);
+                    }// И тук да стане с извикване на метод
+                } catch (SQLException e) {
+                    System.out.println("Error while executing the query.");
+                }
+            } else {
+                try (PreparedStatement pstmt = connection.prepareStatement(CaptainQuery);
+                     ResultSet rs = pstmt.executeQuery()) {
+
+                    System.out.println();
+
+                    DisplayingExe.printTable(rs, tableName);
+                    // DisplayingExe получава rs и името на таблицата, която трябва да бъде изкарана в конзолата
+                } catch (SQLException e) {
+                    System.out.println("Error while executing the query.");
+                }
+
+                // Двата while цикъла също трябва да са в отделни методи в DisplayingExe, но ми омръзна и ще ги правя друг ден
+            }
+
+            return operation;
+        }
+        else if (operation == 2) {
+            InsertionExe insertionExe = new InsertionExe(connection);
+
+            // Въвеждаме нов човек и получаваме неговото ID
+            int personId = insertionExe.insertPerson();
+
+            // Ако успешно сме въвели човек, добавяме го като криминално лице
+            if (personId != -1) {
+                insertionExe.insertCriminal(personId);
+            } else {
+                System.out.println("Failed to insert person.");
+            }
+
+            return operation;
+        }
+        else if (operation == 4) return -1;
+        scanner.close();
         return -1;
     }
 }
