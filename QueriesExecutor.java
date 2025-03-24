@@ -75,13 +75,7 @@ public class QueriesExecutor {
 
                     System.out.println();
 
-                    while (rs.next()) { // Изкарва резултатите
-                        int id = rs.getInt("ID");
-                        String criminalNum = rs.getString("CriminalNUM");
-                        int personId = rs.getInt("PersonID");
-
-                        System.out.println("ID: " + id + ", CriminalNUM: " + criminalNum + ", PersonID: " + personId);
-                    }// И тук да стане с извикване на метод
+                    DisplayingExe.printTable(rs, tableName);
                 } catch (SQLException e) {
                     System.out.println("Error while executing the query.");
                 }
@@ -122,7 +116,7 @@ public class QueriesExecutor {
         return -1;
     }
     public int executeInspectorQueries(int operation, String tableName) {
-        if (operation < 1 && operation > 4) {
+        if (operation < 1 && operation > 3) {
             System.out.println("Invalid operation!");
             return -1;
         }
@@ -150,7 +144,7 @@ public class QueriesExecutor {
                     System.out.println("Error while executing the query.");
                 }
 
-                // Двата while цикъла също трябва да са в отделни методи в DisplayingExe, но ми омръзна и ще ги правя друг ден
+
 
 
             return operation;
@@ -170,7 +164,7 @@ public class QueriesExecutor {
 
             return operation;
         }
-        else if (operation == 4) return -1;
+        else if (operation == 3) return -1;
         scanner.close();
         return -1;
     }
@@ -201,17 +195,12 @@ public class QueriesExecutor {
 
                     System.out.println();
 
-                    while (rs.next()) { // Изкарва резултатите
-                        int id = rs.getInt("ID");
-                        String criminalNum = rs.getString("CriminalNUM");
-                        int personId = rs.getInt("PersonID");
-
-                        System.out.println("ID: " + id + ", CriminalNUM: " + criminalNum + ", PersonID: " + personId);
-                    }// И тук да стане с извикване на метод
+                    DisplayingExe.printTable(rs, tableName);
                 } catch (SQLException e) {
                     System.out.println("Error while executing the query.");
                 }
-            } else {
+            }
+            else if (tableName.equals("Policeofficer")){
                 try (PreparedStatement pstmt = connection.prepareStatement(CaptainQuery);
                      ResultSet rs = pstmt.executeQuery()) {
 
@@ -222,8 +211,42 @@ public class QueriesExecutor {
                 } catch (SQLException e) {
                     System.out.println("Error while executing the query.");
                 }
+            }
+            else if (tableName.equals("Victim")){
+                try (PreparedStatement pstmt = connection.prepareStatement(CaptainQuery);
+                     ResultSet rs = pstmt.executeQuery()) {
 
-                // Двата while цикъла също трябва да са в отделни методи в DisplayingExe, но ми омръзна и ще ги правя друг ден
+                    System.out.println();
+
+                    DisplayingExe.printTable(rs, tableName);
+                    // DisplayingExe получава rs и името на таблицата, която трябва да бъде изкарана в конзолата
+                } catch (SQLException e) {
+                    System.out.println("Error while executing the query.");
+                }
+            }
+            else if (tableName.equals("Crime")){
+                try (PreparedStatement pstmt = connection.prepareStatement(CaptainQuery);
+                     ResultSet rs = pstmt.executeQuery()) {
+
+                    System.out.println();
+
+                    DisplayingExe.printTable(rs, tableName);
+                    // DisplayingExe получава rs и името на таблицата, която трябва да бъде изкарана в конзолата
+                } catch (SQLException e) {
+                    System.out.println("Error while executing the query.");
+                }
+            }
+            else if (tableName.equals("Department")){
+                try (PreparedStatement pstmt = connection.prepareStatement(CaptainQuery);
+                     ResultSet rs = pstmt.executeQuery()) {
+
+                    System.out.println();
+
+                    DisplayingExe.printTable(rs, tableName);
+                    // DisplayingExe получава rs и името на таблицата, която трябва да бъде изкарана в конзолата
+                } catch (SQLException e) {
+                    System.out.println("Error while executing the query.");
+                }
             }
 
             return operation;
