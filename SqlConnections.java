@@ -22,7 +22,7 @@ public class SqlConnections {
                 Scanner scanner = new Scanner(System.in);
 
                 System.out.println();
-                System.out.println("1. Търсене");
+                System.out.println("1. Преглед");
                 System.out.println("2. Добавяне");
                 System.out.println("3. Редактиране");
                 System.out.println("4. Изход");
@@ -49,8 +49,6 @@ public class SqlConnections {
 
                     if(queriesExecutor.executeLieutenantQueries(operation, tableName) == -1){
                         break;
-                    }else{
-                        queriesExecutor.executeLieutenantQueries(operation, tableName);
                     }
 
                     System.out.println();
@@ -68,21 +66,16 @@ public class SqlConnections {
                 Scanner scanner = new Scanner(System.in);
 
                 System.out.println();
-                System.out.println("1. Търсене");
+                System.out.println("1. Преглед");
                 System.out.println("2. Редактиране");
                 System.out.println("3. Изход");
 
                 int operation = scanner.nextInt();
-                String tableName = "";
+                String tableName = "Crime"; // Винаги работим с "Crime"
 
-                while (operation != 3){ // Докато не е избран 3. Изход, могат да се правят промени
-
-                    tableName = "Crime";
-
-                    if(queriesExecutor.executeInspectorQueries(operation, tableName) == -1){
+                while (operation != 3) { // Докато не е избран 3. Изход, могат да се правят промени
+                    if (queriesExecutor.executeInspectorQueries(operation, tableName) == -1) {
                         break;
-                    }else{
-                        queriesExecutor.executeInspectorQueries(operation, tableName);
                     }
 
                     System.out.println();
@@ -93,13 +86,13 @@ public class SqlConnections {
                     operation = scanner.nextInt();
                 }
                 scanner.close();
-
             }
+
             else if(role != null && role.equals("`Captain`@`%`")){
                 Scanner scanner = new Scanner(System.in);
 
                 System.out.println();
-                System.out.println("1. Търсене");
+                System.out.println("1. Преглед");
                 System.out.println("2. Добавяне");
                 System.out.println("3. Редактиране");
                 System.out.println("4. Изтриване");
@@ -142,8 +135,6 @@ public class SqlConnections {
 
                     if(queriesExecutor.executeLieutenantQueries(operation, tableName) == -1){
                         break;
-                    }else{
-                        queriesExecutor.executeLieutenantQueries(operation, tableName);
                     }
 
                     System.out.println();

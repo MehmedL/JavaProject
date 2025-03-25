@@ -5,7 +5,6 @@ public class DisplayingExe {
     // Метод за извеждане на таблица на конзолата
     public static void printTable(ResultSet rs, String tableName) {
         try {
-            int i = 0;
             while (rs.next()) {
                 // Добавяме rs.next(), за да четем редовете
                 if (tableName.equals("Crime")) {
@@ -86,10 +85,8 @@ public class DisplayingExe {
                 else {
                     break;
                 }
-                i++;
             }
 
-            System.out.println(i);
         } catch (SQLException e) {
             e.printStackTrace();
         }
