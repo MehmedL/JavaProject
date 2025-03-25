@@ -5,7 +5,9 @@ public class DisplayingExe {
     // Метод за извеждане на таблица на конзолата
     public static void printTable(ResultSet rs, String tableName) {
         try {
-            while (rs.next()) { // Добавяме rs.next(), за да четем редовете
+            int i = 0;
+            while (rs.next()) {
+                // Добавяме rs.next(), за да четем редовете
                 if (tableName.equals("Crime")) {
                     int id = rs.getInt("ID");
                     String crimeNum = rs.getString("CrimeNUM");
@@ -22,7 +24,6 @@ public class DisplayingExe {
                     System.out.println("ID: " + id + ", Crime №: " + crimeNum + ", Crime Type: " + crimeType + ", Commit date: " + date
                             + ", Closure: " + closure + ", Criminal ID: " + criminalId + ", Victim ID: " + victimId + ", Police Officer ID: " + officerId
                             + ", Department ID: " + department);
-
                 }
                 else if(tableName.equals("Victim"))
                 {
@@ -82,7 +83,13 @@ public class DisplayingExe {
 
                     System.out.println("ID:" + id + ", Der" + ", DepartmentName:" + departmentName);
                 }
+                else {
+                    break;
+                }
+                i++;
             }
+
+            System.out.println(i);
         } catch (SQLException e) {
             e.printStackTrace();
         }

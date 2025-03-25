@@ -68,15 +68,14 @@ public class SqlConnections {
                 Scanner scanner = new Scanner(System.in);
 
                 System.out.println();
-                System.out.println("1. Преглед");
-                System.out.println("2. Добавяне");
-                System.out.println("3. Редактиране");
-                System.out.println("4. Изход");
+                System.out.println("1. Търсене");
+                System.out.println("2. Редактиране");
+                System.out.println("3. Изход");
 
                 int operation = scanner.nextInt();
                 String tableName = "";
 
-                while (operation != 4){ // Докато не е избран 4. Изход, могат да се правят промени
+                while (operation != 3){ // Докато не е избран 3. Изход, могат да се правят промени
 
                     tableName = "Crime";
 
@@ -84,17 +83,15 @@ public class SqlConnections {
                         break;
                     }else{
                         queriesExecutor.executeInspectorQueries(operation, tableName);
-
                     }
 
                     System.out.println();
                     System.out.println("1. Преглед");
-                    System.out.println("2. Добавяне");
-                    System.out.println("3. Редактиране");
-                    System.out.println("4. Изход");
+                    System.out.println("2. Редактиране");
+                    System.out.println("3. Изход");
 
                     operation = scanner.nextInt();
-                }// Още два if за другите две роли
+                }
                 scanner.close();
 
             }
@@ -102,7 +99,7 @@ public class SqlConnections {
                 Scanner scanner = new Scanner(System.in);
 
                 System.out.println();
-                System.out.println("1. Преглед");
+                System.out.println("1. Търсене");
                 System.out.println("2. Добавяне");
                 System.out.println("3. Редактиране");
                 System.out.println("4. Изтриване");
@@ -143,12 +140,11 @@ public class SqlConnections {
                         break;
                     }
 
-//                    if(queriesExecutor.executeLieutenantQueries(operation, tableName) == -1){
-//                        break;
-//                    }
-//                    else{
-//                        queriesExecutor.executeLieutenantQueries(operation, tableName);
-//                    }
+                    if(queriesExecutor.executeLieutenantQueries(operation, tableName) == -1){
+                        break;
+                    }else{
+                        queriesExecutor.executeLieutenantQueries(operation, tableName);
+                    }
 
                     System.out.println();
                     System.out.println("1. Преглед");
