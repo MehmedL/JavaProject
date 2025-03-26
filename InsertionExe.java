@@ -69,6 +69,23 @@ public class InsertionExe {
             System.out.println("Error inserting criminal: " + e.getMessage());
         }
     }
+    public void insertVictim(int personId) {
+        String victimNum = generateVictimNumber();
+        String insertCriminalSQL = "INSERT INTO Victim (VictimNUM, PersonID) VALUES (?, ?)";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(insertCriminalSQL)) {
+            pstmt.setString(1, victimNum);
+            pstmt.setInt(2, personId);
+
+            int victimRows = pstmt.executeUpdate();
+            if (victimRows > 0) {
+                System.out.println("Victim successfully added with PersonID: " + personId + ", CriminalNUM: " + victimNum);
+            }
+        } catch (SQLException e) {
+            System.out.println("Error inserting victim: " + e.getMessage());
+        }
+    }
+
 
     private String generateCriminalNumber() {
         String lastCriminalNum = null;
@@ -91,6 +108,29 @@ public class InsertionExe {
         int lastNum = Integer.parseInt(lastCriminalNum.substring(1));
         return String.format("C%07d", lastNum + 1);
     }
+
+    private String generateVictimNumber() {
+        String lastVictimNum = null;
+        String query = "SELECT VictimNUM FROM Victim ORDER BY VictimNUM DESC LIMIT 1";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            if (rs.next()) {
+                lastVictimNum = rs.getString("VictimNUM");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error retrieving last VictimNUM: " + e.getMessage());
+        }
+
+        if (lastVictimNum == null) {
+            return "V0000001";
+        }
+
+        int lastNum = Integer.parseInt(lastVictimNum.substring(1));
+        return String.format("V%07d", lastNum + 1);
+    }
+
 }
 
 // По аналогичен начин трябва да се добави insertPolice
