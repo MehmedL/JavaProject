@@ -129,11 +129,9 @@ public class SqlConnections {
                     {
                         tableName ="Department";
                     }
-                    else {
-                        break;
-                    }
 
-                    if(queriesExecutor.executeLieutenantQueries(operation, tableName) == -1){
+
+                    if(queriesExecutor.executeCaptainQueries(operation, tableName) == -1){
                         break;
                     }
 

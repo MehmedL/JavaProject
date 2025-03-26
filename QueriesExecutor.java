@@ -102,9 +102,12 @@ public class QueriesExecutor {
             // Въвеждаме нов човек и получаваме неговото ID
             int personId = insertionExe.insertPerson();
 
-            // Ако успешно сме въвели човек, добавяме го като криминално лице
             if (personId != -1) {
-                insertionExe.insertCriminal(personId);
+                if(tableName.equals("Criminal")){
+                    insertionExe.insertCriminal(personId);
+                }
+//              else if(tableName.equals("Crime")){
+//              }
             } else {
                 System.out.println("Failed to insert person.");
             }
@@ -144,25 +147,10 @@ public class QueriesExecutor {
                 System.out.println("Error while executing the query.");
             }
 
-
-
-
             return operation;
         }
         else if (operation == 2) {
-            InsertionExe insertionExe = new InsertionExe(connection);
-
-            // Въвеждаме нов човек и получаваме неговото ID
-            int personId = insertionExe.insertPerson();
-
-            // Ако успешно сме въвели човек, добавяме го като криминално лице
-            if (personId != -1) {
-                insertionExe.insertCriminal(personId);
-            } else {
-                System.out.println("Failed to insert person.");
-            }
-
-            return operation;
+            // UPDATE - редактиране в таблица Crime
         }
         else if (operation == 3) return -1;
         scanner.close();
@@ -172,6 +160,8 @@ public class QueriesExecutor {
     //Не съм дописал метода executeCaptainQueries.
 
     public int executeCaptainQueries(int operation, String tableName) {
+        //System.out.println(tableName);
+
         if (operation < 1 && operation > 5) {
             System.out.println("Invalid operation!");
             return -1;
@@ -252,17 +242,38 @@ public class QueriesExecutor {
             return operation;
         }
         else if (operation == 2) {
+
             InsertionExe insertionExe = new InsertionExe(connection);
+
+            if(tableName.equals("Crime")){
+                int crimeId = insertionExe.insertCrime();
+
+                if (crimeId != -1) {
+                    System.out.println("Crime successfully added with ID: " + crimeId);
+                } else {
+                    System.out.println("Failed to add crime.");
+                }
+            }
+//                else if(tableName.equals("Department")){
+//
+//                }else if(tableName.equals("Policeofficer")){
+//
+//                }
 
             // Въвеждаме нов човек и получаваме неговото ID
             int personId = insertionExe.insertPerson();
 
             // Ако успешно сме въвели човек, добавяме го като криминално лице
             if (personId != -1) {
-                insertionExe.insertCriminal(personId);
+                if(tableName.equals("Criminal")){
+                    insertionExe.insertCriminal(personId);
+                }else if(tableName.equals("Victim")){
+                    insertionExe.insertVictim(personId);
+                }
             } else {
                 System.out.println("Failed to insert person.");
             }
+
 
             return operation;
         }
