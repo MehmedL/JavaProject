@@ -101,39 +101,75 @@ public class SqlConnections {
                 int operation = scanner.nextInt();
                 String tableName = "";
 
+
                 while (operation != 5){ // Докато не е избран 5. Изход, могат да се правят промени
-
-                    System.out.println();
-                    System.out.println("1. Криминално проявени лица"); // a.k.a Престъпник/таблица Criminal ;)
-                    System.out.println("2. Престъпление");
-                    System.out.println("3. Полицаи");
-                    System.out.println("4. Потърпевши");
-                    System.out.println("5. Полицейски Отдел");
-
-                    int table = scanner.nextInt();
-
-                    if(table == 1){
-                        tableName = "Criminal";
-                    }else if (table == 2){
-                        tableName = "Crime";
-                    }
-                    else if (table == 3)
+                    if(operation == 1)
                     {
-                        tableName = "Policeofficer";
+                        System.out.println();
+                        System.out.println("1. Криминално проявени лица"); // a.k.a Престъпник/таблица Criminal ;)
+                        System.out.println("2. Престъпление");
+                        System.out.println("3. Полицаи");
+                        System.out.println("4. Потърпевши");
+                        System.out.println("5. Полицейски Отдел");
+
+                        int table = scanner.nextInt();
+
+                        if(table == 1){
+                            tableName = "Criminal";
+                        }else if (table == 2){
+                            tableName = "Crime";
+                        }
+                        else if (table == 3)
+                        {
+                            tableName = "Policeofficer";
+                        }
+                        else if (table == 4)
+                        {
+                            tableName = "Victim";
+                        }
+                        else if (table == 5)
+                        {
+                            tableName ="Department";
+                        }
+                        else {
+                            break;
+                        }
+
+                        if(queriesExecutor.executeCaptainQueries(operation, tableName) == -1){
+                            break;
+                        }
                     }
-                    else if (table == 4)
-                    {
-                        tableName = "Victim";
-                    }
-                    else if (table == 5)
-                    {
-                        tableName ="Department";
+                    else {
+                        System.out.println();
+                        System.out.println("1. Криминално проявени лица"); // a.k.a Престъпник/таблица Criminal ;)
+                        System.out.println("2. Престъпление");
+                        System.out.println("3. Полицаи");
+                        System.out.println("4. Потърпевши");
+
+                        int table = scanner.nextInt();
+
+                        if(table == 1){
+                            tableName = "Criminal";
+                        }else if (table == 2){
+                            tableName = "Crime";
+                        }
+                        else if (table == 3)
+                        {
+                            tableName = "Policeofficer";
+                        }
+                        else if (table == 4)
+                        {
+                            tableName = "Victim";
+                        }
+                        else {
+                            break;
+                        }
+
+                        if(queriesExecutor.executeCaptainQueries(operation, tableName) == -1){
+                            break;
+                        }
                     }
 
-
-                    if(queriesExecutor.executeCaptainQueries(operation, tableName) == -1){
-                        break;
-                    }
 
                     System.out.println();
                     System.out.println("1. Преглед");
@@ -142,7 +178,7 @@ public class SqlConnections {
                     System.out.println("4. Изход");
 
                     operation = scanner.nextInt();
-                }// Още два if за другите две роли
+                }
                 scanner.close();
 
             }

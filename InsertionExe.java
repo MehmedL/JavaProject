@@ -85,50 +85,112 @@ public class InsertionExe {
             System.out.println("Error inserting victim: " + e.getMessage());
         }
     }
-    public int insertCrime(){
 
-        try {
-            Scanner scanner = new Scanner(System.in);
+    public void insertPoliceOfficer(int personId) {
+        Scanner scanner = new Scanner(System.in);
 
-            System.out.println("Crime Type: ");
-            String CrimeType = scanner.nextLine();
-            System.out.println("Date of commit (YYYY-MM-DD): ");
-            String CommitDate = scanner.nextLine();
-            System.out.println("Closure: ");
-            String Closure = scanner.nextLine();
-            System.out.println("Criminal ID: ");
-            int CriminalID = scanner.nextInt();
-            System.out.println("Victim ID: ");
-            int VictimID = scanner.nextInt();
-            System.out.println("Police Officer ID: ");
-            int PoliceOfficerID = scanner.nextInt();
-            System.out.println("Department ID: ");
-            int DepartmentID = scanner.nextInt();
+        // Въвеждане на данни за полицейския служител
+        System.out.println("Officer Rank: ");
+        String officerRank = scanner.nextLine();
+        System.out.println("Department ID: ");
+        int departmentID = Integer.parseInt(scanner.nextLine());
 
-            String CrimeNUM = generateCrimeNumber();
+        // Генериране на уникален OfficerBadgeNUM
+        String officerBadgeNum = generateOfficerBadgeNUM();
 
-            String insertCrimeSQL = "INSERT INTO Crime (CrimeNUM, CrimeType, CommitDate, Closure, CriminalID, VictimID, PoliceOfficerID, DepartmentID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        // SQL заявка за вмъкване в таблицата PoliceOfficer
+        String insertOfficerSQL = "INSERT INTO PoliceOfficer (OfficerBadgeNUM, OfficerRank, PersonID, DepartmentID) VALUES (?, ?, ?, ?)";
 
-            try (PreparedStatement pstmt = connection.prepareStatement(insertCrimeSQL, PreparedStatement.RETURN_GENERATED_KEYS)) {
-                pstmt.setString(1, CrimeNUM);
-                pstmt.setString(2, CrimeType);
-                pstmt.setString(3, CommitDate);
-                pstmt.setString(4, Closure);
-                pstmt.setInt(5, CriminalID);
-                pstmt.setInt(6, VictimID);
-                pstmt.setInt(7, PoliceOfficerID);
-                pstmt.setInt(8, DepartmentID);
+        try (PreparedStatement pstmt = connection.prepareStatement(insertOfficerSQL)) {
+            pstmt.setString(1, officerBadgeNum);
+            pstmt.setString(2, officerRank);
+            pstmt.setInt(3, personId);
+            pstmt.setInt(4, departmentID);
 
-                int affectedRows = pstmt.executeUpdate();
-                if (affectedRows == 0) {
-                    throw new SQLException("Failed to insert into Crime.");
-                }
-
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("PoliceOfficer successfully added with OfficerBadgeNUM: " + officerBadgeNum +
+                        ", PersonID: " + personId +
+                        ", DepartmentID: " + departmentID);
             }
-        }catch (SQLException e) {
-            e.printStackTrace();  // Log the error
+        } catch (SQLException e) {
+            System.out.println("Error inserting victim: " + e.getMessage());
         }
-        return -1;
+    }
+
+    public void insertCrime() {
+        Scanner scanner = new Scanner(System.in);
+
+        // Въвеждане на данни за престъплението
+        System.out.println("Crime Type: ");
+        String crimeType = scanner.nextLine();
+
+        System.out.println("Commit Date (YYYY-MM-DD): ");
+        String commitDate = scanner.nextLine();
+
+        System.out.println("Closure: ");
+        String closure = scanner.nextLine();
+
+        System.out.println("Criminal ID: ");
+        int criminalID = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Victim ID: ");
+        int victimID = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Police Officer ID: ");
+        int policeOfficerID = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Department ID: ");
+        int departmentID = Integer.parseInt(scanner.nextLine());
+
+        // Генериране на уникален CrimeNUM
+        String crimeNUM = generateCrimeNum();
+
+        // SQL заявка за вмъкване в таблицата Crime
+        String insertCrimeSQL = "INSERT INTO Crime (CrimeNUM, CrimeType, CommitData, Closure, CriminalID, VictimID, PoliceOfficerID, DepartmentID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(insertCrimeSQL)) {
+            pstmt.setString(1, crimeNUM);
+            pstmt.setString(2, crimeType);
+            pstmt.setString(3, commitDate);
+            pstmt.setString(4, closure);
+            pstmt.setInt(5, criminalID);
+            pstmt.setInt(6, victimID);
+            pstmt.setInt(7, policeOfficerID);
+            pstmt.setInt(8, departmentID);
+
+            int affectedRows = pstmt.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("PoliceOfficer successfully added with CrimeNUM: " + crimeNUM);
+            } else {
+                System.out.println("Failed to add crime.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error inserting victim: " + e.getMessage());
+        }
+    }
+
+    private String generateCrimeNum() {
+        String lastCrimeNum = null;
+        String query = "SELECT CrimeNUM FROM Crime ORDER BY CrimeNUM DESC LIMIT 1";
+
+        try (PreparedStatement pstmt = connection.prepareStatement(query);
+             ResultSet rs = pstmt.executeQuery()) {
+
+            if (rs.next()) {
+                lastCrimeNum = rs.getString("CrimeNUM");
+            }
+        } catch (SQLException e) {
+            System.out.println("Грешка при извличане на последния CrimeNUM: " + e.getMessage());
+        }
+
+        if (lastCrimeNum == null) {
+            return "CR0000001";
+        }
+
+        // Предполагаме, че CrimeNUM има формат "CR" последван от 7 цифри.
+        int lastNum = Integer.parseInt(lastCrimeNum.substring(2));
+        return String.format("CR%07d", lastNum + 1);
     }
 
 
@@ -175,40 +237,29 @@ public class InsertionExe {
         int lastNum = Integer.parseInt(lastVictimNum.substring(1));
         return String.format("V%07d", lastNum + 1);
     }
-    private String generateCrimeNumber() {
-        String lastCrimeNum = null;
-        String query = "SELECT CrimeNUM FROM Crime ORDER BY CrimeNUM DESC LIMIT 1";
+    private String generateOfficerBadgeNUM() {
+        String lastOfficerBadgeNum = null;
+        String query = "SELECT OfficerBadgeNum FROM PoliceOfficer ORDER BY OfficerBadgeNum DESC LIMIT 1";
 
         try (PreparedStatement pstmt = connection.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
 
             if (rs.next()) {
-                lastCrimeNum = rs.getString("CrimeNUM");
+                lastOfficerBadgeNum = rs.getString("OfficerBadgeNUM");
             }
         } catch (SQLException e) {
-            System.out.println("Error retrieving last CrimeNUM: " + e.getMessage());
+            System.out.println("Error retrieving last OfficerBadgeNUM: " + e.getMessage());
         }
 
-        if (lastCrimeNum == null) {
-            return "CR00000001";  // First crime number, starting at 1
+        if (lastOfficerBadgeNum == null) {
+            return "B0000001";
         }
 
-        // Ensure correct parsing by extracting only the numeric part of the CrimeNUM
-        String numericPart = lastCrimeNum.substring(2);  // Remove the "CR" prefix
-        int lastNum = 0;
-
-        // Try parsing the numeric part and handle any potential issues with the format
-        try {
-            lastNum = Integer.parseInt(numericPart);
-        } catch (NumberFormatException e) {
-            System.out.println("Error parsing CrimeNUM: " + e.getMessage());
-            return "CR00000001";  // Return default if there's an error parsing
-        }
-
-        // Generate the next CrimeNUM by incrementing the number and formatting it
-        return String.format("CR%07d", lastNum + 1);
+        int lastNum = Integer.parseInt(lastOfficerBadgeNum.substring(1));
+        return String.format("B%07d", lastNum + 1);
     }
 
 }
 
-// По аналогичен начин трябва да се добави insertPolice
+//Мисля че е готово Направи един преглед и ти за всеки случай да не съм изпуснал нещо
+

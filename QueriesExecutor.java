@@ -102,12 +102,15 @@ public class QueriesExecutor {
             // Въвеждаме нов човек и получаваме неговото ID
             int personId = insertionExe.insertPerson();
 
+            // Ако успешно сме въвели човек, добавяме го като криминално лице
             if (personId != -1) {
-                if(tableName.equals("Criminal")){
+                if(tableName == "Criminal") {
                     insertionExe.insertCriminal(personId);
                 }
-//              else if(tableName.equals("Crime")){
-//              }
+                else if (tableName == "Crime")
+                {
+                    insertionExe.insertCrime();
+                }
             } else {
                 System.out.println("Failed to insert person.");
             }
@@ -146,11 +149,22 @@ public class QueriesExecutor {
             } catch (SQLException e) {
                 System.out.println("Error while executing the query.");
             }
-
             return operation;
         }
         else if (operation == 2) {
-            // UPDATE - редактиране в таблица Crime
+            InsertionExe insertionExe = new InsertionExe(connection);
+
+            // Въвеждаме нов човек и получаваме неговото ID
+            int personId = insertionExe.insertPerson();
+
+            // Ако успешно сме въвели човек го добавяме
+            if (personId != -1) {
+                insertionExe.insertCrime();
+            } else {
+                System.out.println("Failed to insert person.");
+            }
+
+            return operation;
         }
         else if (operation == 3) return -1;
         scanner.close();
@@ -160,8 +174,6 @@ public class QueriesExecutor {
     //Не съм дописал метода executeCaptainQueries.
 
     public int executeCaptainQueries(int operation, String tableName) {
-        //System.out.println(tableName);
-
         if (operation < 1 && operation > 5) {
             System.out.println("Invalid operation!");
             return -1;
@@ -242,42 +254,55 @@ public class QueriesExecutor {
             return operation;
         }
         else if (operation == 2) {
-
             InsertionExe insertionExe = new InsertionExe(connection);
-
-            if(tableName.equals("Crime")){
-                int crimeId = insertionExe.insertCrime();
-
-                if (crimeId != -1) {
-                    System.out.println("Crime successfully added with ID: " + crimeId);
-                } else {
-                    System.out.println("Failed to add crime.");
-                }
-            }
-//                else if(tableName.equals("Department")){
-//
-//                }else if(tableName.equals("Policeofficer")){
-//
-//                }
 
             // Въвеждаме нов човек и получаваме неговото ID
             int personId = insertionExe.insertPerson();
 
-            // Ако успешно сме въвели човек, добавяме го като криминално лице
+            // Ако успешно сме въвели човек, добавяме го в съответната таблица
             if (personId != -1) {
-                if(tableName.equals("Criminal")){
+                if(tableName == "Criminal"){
                     insertionExe.insertCriminal(personId);
-                }else if(tableName.equals("Victim")){
+                }
+                else if(tableName == "Crime"){
+                    insertionExe.insertCrime();
+                }
+                else if(tableName == "Victim")
+                {
                     insertionExe.insertVictim(personId);
+                }
+                else if(tableName == "Policeofficer")
+                {
+                    insertionExe.insertPoliceOfficer(personId);
                 }
             } else {
                 System.out.println("Failed to insert person.");
             }
 
-
             return operation;
         }
-        else if (operation == 4) return -1;
+        else if (operation == 3)
+        {
+
+                if(tableName == "Criminal"){
+                    
+                }
+                else if(tableName == "Crime"){
+
+                }
+                else if(tableName == "Victim")
+                {
+
+                }
+                else if(tableName == "Policeofficer")
+                {
+
+
+            } else {
+                System.out.println("Failed to insert person.");
+            }
+        }
+        else if (operation == 5) return -1;
         scanner.close();
         return -1;
     }
