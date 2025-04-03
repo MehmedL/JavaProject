@@ -283,23 +283,46 @@ public class QueriesExecutor {
         }
         else if (operation == 3)
         {
+            UpdateExe updateExe = new UpdateExe(connection);
 
                 if(tableName == "Criminal"){
-                    
+                    updateExe.updateCriminal();
                 }
                 else if(tableName == "Crime"){
-
+                    updateExe.updateCrime();
                 }
                 else if(tableName == "Victim")
                 {
-
+                    updateExe.updateVictim();
                 }
                 else if(tableName == "Policeofficer")
                 {
-
+                    updateExe.updatePoliceOfficer();
 
             } else {
-                System.out.println("Failed to insert person.");
+                System.out.println("Failed to update.");
+            }
+        }
+        else if (operation == 4)
+        {
+            DeleteExe deleteExe = new DeleteExe(connection);
+
+            if(tableName == "Criminal"){
+                deleteExe.deleteCriminal();
+            }
+            else if(tableName == "Crime"){
+                deleteExe.deleteCriminal();
+            }
+            else if(tableName == "Victim")
+            {
+                deleteExe.deleteVictim();
+            }
+            else if(tableName == "Policeofficer")
+            {
+                deleteExe.deletePoliceOfficer();
+
+            } else {
+                System.out.println("Failed to delete.");
             }
         }
         else if (operation == 5) return -1;

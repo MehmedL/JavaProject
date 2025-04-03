@@ -161,12 +161,12 @@ public class InsertionExe {
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
-                System.out.println("PoliceOfficer successfully added with CrimeNUM: " + crimeNUM);
+                System.out.println("Crime successfully added with CrimeNUM: " + crimeNUM);
             } else {
                 System.out.println("Failed to add crime.");
             }
         } catch (SQLException e) {
-            System.out.println("Error inserting victim: " + e.getMessage());
+            System.out.println("Error inserting crime: " + e.getMessage());
         }
     }
 
@@ -181,7 +181,7 @@ public class InsertionExe {
                 lastCrimeNum = rs.getString("CrimeNUM");
             }
         } catch (SQLException e) {
-            System.out.println("Грешка при извличане на последния CrimeNUM: " + e.getMessage());
+            System.out.println("Error retrieving latest CrimeNUM: " + e.getMessage());
         }
 
         if (lastCrimeNum == null) {
