@@ -99,6 +99,16 @@ public class QueriesExecutor {
         else if (operation == 2) {
             InsertionExe insertionExe = new InsertionExe(connection);
 
+            if(tableName.equals("Crime")){
+                int crimeId = insertionExe.insertCrime();
+
+                if (crimeId != -1) {
+                    System.out.println("Crime successfully added with ID: " + crimeId);
+                } else {
+                    System.out.println("Failed to add crime.");
+                }
+            }
+
             // Въвеждаме нов човек и получаваме неговото ID
             int personId = insertionExe.insertPerson();
 
@@ -256,6 +266,15 @@ public class QueriesExecutor {
         else if (operation == 2) {
             InsertionExe insertionExe = new InsertionExe(connection);
 
+            if(tableName.equals("Crime")){
+                int crimeId = insertionExe.insertCrime();
+
+                if (crimeId != -1) {
+                    System.out.println("Crime successfully added with ID: " + crimeId);
+                } else {
+                    System.out.println("Failed to add crime.");
+                }
+            }
             // Въвеждаме нов човек и получаваме неговото ID
             int personId = insertionExe.insertPerson();
 
@@ -285,19 +304,19 @@ public class QueriesExecutor {
         {
             UpdateExe updateExe = new UpdateExe(connection);
 
-                if(tableName == "Criminal"){
-                    updateExe.updateCriminal();
-                }
-                else if(tableName == "Crime"){
-                    updateExe.updateCrime();
-                }
-                else if(tableName == "Victim")
-                {
-                    updateExe.updateVictim();
-                }
-                else if(tableName == "Policeofficer")
-                {
-                    updateExe.updatePoliceOfficer();
+            if(tableName == "Criminal"){
+                updateExe.updateCriminal();
+            }
+            else if(tableName == "Crime"){
+                updateExe.updateCrime();
+            }
+            else if(tableName == "Victim")
+            {
+                updateExe.updateVictim();
+            }
+            else if(tableName == "Policeofficer")
+            {
+                updateExe.updatePoliceOfficer();
 
             } else {
                 System.out.println("Failed to update.");

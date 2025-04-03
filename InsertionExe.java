@@ -118,56 +118,50 @@ public class InsertionExe {
         }
     }
 
-    public void insertCrime() {
-        Scanner scanner = new Scanner(System.in);
+    public int insertCrime(){
 
-        // Въвеждане на данни за престъплението
-        System.out.println("Crime Type: ");
-        String crimeType = scanner.nextLine();
+        try {
+            Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Commit Date (YYYY-MM-DD): ");
-        String commitDate = scanner.nextLine();
+            System.out.println("Crime Type: ");
+            String CrimeType = scanner.nextLine();
+            System.out.println("Date of commit (YYYY-MM-DD): ");
+            String CommitDate = scanner.nextLine();
+            System.out.println("Closure: ");
+            String Closure = scanner.nextLine();
+            System.out.println("Criminal ID: ");
+            int CriminalID = scanner.nextInt();
+            System.out.println("Victim ID: ");
+            int VictimID = scanner.nextInt();
+            System.out.println("Police Officer ID: ");
+            int PoliceOfficerID = scanner.nextInt();
+            System.out.println("Department ID: ");
+            int DepartmentID = scanner.nextInt();
 
-        System.out.println("Closure: ");
-        String closure = scanner.nextLine();
+            String CrimeNUM = generateCrimeNum();
 
-        System.out.println("Criminal ID: ");
-        int criminalID = Integer.parseInt(scanner.nextLine());
+            String insertCrimeSQL = "INSERT INTO Crime (CrimeNUM, CrimeType, CommitDate, Closure, CriminalID, VictimID, PoliceOfficerID, DepartmentID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
-        System.out.println("Victim ID: ");
-        int victimID = Integer.parseInt(scanner.nextLine());
+            try (PreparedStatement pstmt = connection.prepareStatement(insertCrimeSQL, PreparedStatement.RETURN_GENERATED_KEYS)) {
+                pstmt.setString(1, CrimeNUM);
+                pstmt.setString(2, CrimeType);
+                pstmt.setString(3, CommitDate);
+                pstmt.setString(4, Closure);
+                pstmt.setInt(5, CriminalID);
+                pstmt.setInt(6, VictimID);
+                pstmt.setInt(7, PoliceOfficerID);
+                pstmt.setInt(8, DepartmentID);
 
-        System.out.println("Police Officer ID: ");
-        int policeOfficerID = Integer.parseInt(scanner.nextLine());
+                int affectedRows = pstmt.executeUpdate();
+                if (affectedRows == 0) {
+                    throw new SQLException("Failed to insert into Crime.");
+                }
 
-        System.out.println("Department ID: ");
-        int departmentID = Integer.parseInt(scanner.nextLine());
-
-        // Генериране на уникален CrimeNUM
-        String crimeNUM = generateCrimeNum();
-
-        // SQL заявка за вмъкване в таблицата Crime
-        String insertCrimeSQL = "INSERT INTO Crime (CrimeNUM, CrimeType, CommitData, Closure, CriminalID, VictimID, PoliceOfficerID, DepartmentID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-        try (PreparedStatement pstmt = connection.prepareStatement(insertCrimeSQL)) {
-            pstmt.setString(1, crimeNUM);
-            pstmt.setString(2, crimeType);
-            pstmt.setString(3, commitDate);
-            pstmt.setString(4, closure);
-            pstmt.setInt(5, criminalID);
-            pstmt.setInt(6, victimID);
-            pstmt.setInt(7, policeOfficerID);
-            pstmt.setInt(8, departmentID);
-
-            int affectedRows = pstmt.executeUpdate();
-            if (affectedRows > 0) {
-                System.out.println("Crime successfully added with CrimeNUM: " + crimeNUM);
-            } else {
-                System.out.println("Failed to add crime.");
             }
-        } catch (SQLException e) {
-            System.out.println("Error inserting crime: " + e.getMessage());
+        }catch (SQLException e) {
+            e.printStackTrace();  // Log the error
         }
+        return -1;
     }
 
     private String generateCrimeNum() {
@@ -181,7 +175,7 @@ public class InsertionExe {
                 lastCrimeNum = rs.getString("CrimeNUM");
             }
         } catch (SQLException e) {
-            System.out.println("Error retrieving latest CrimeNUM: " + e.getMessage());
+            System.out.println("Грешка при извличане на последния CrimeNUM: " + e.getMessage());
         }
 
         if (lastCrimeNum == null) {
