@@ -32,7 +32,7 @@ public class DisplayingExe {
 
                     System.out.println();
 
-                    System.out.println("ID: " + id + ", Victim №: " + victimNUM + "PersonID: " + personID);
+                    System.out.println("ID: " + id + ", Victim №: " + victimNUM + ", PersonID: " + personID);
                 }
                 else if(tableName.equals("Person"))
                 {
@@ -49,7 +49,7 @@ public class DisplayingExe {
                     System.out.println("ID: " + id + ", EGN: " + EGN + ", FirstName:" + firstName + ", MiddleName:" + middleName + ", LastName:" + lastName
                     + ", BirthDate:" + birthDate + ", Sex:" + sex);
                 }
-                else if(tableName.equals("PoliceOfficer"))
+                else if(tableName.equals("Policeofficer"))
                 {
                     int id = rs.getInt("ID");
                     String officerBadgeNum =rs.getString("OfficerBadgeNum");

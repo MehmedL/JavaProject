@@ -103,87 +103,53 @@ public class SqlConnections {
 
 
                 while (operation != 5){ // Докато не е избран 5. Изход, могат да се правят промени
-                    if(operation == 1)
+                    System.out.println();
+                    System.out.println("1. Криминално проявени лица"); // a.k.a Престъпник/таблица Criminal ;)
+                    System.out.println("2. Престъпление");
+                    System.out.println("3. Полицаи");
+                    System.out.println("4. Потърпевши");
+                    System.out.println("5. Полицейски Отдел");
+
+                    int table = scanner.nextInt();
+
+                    if(table == 1){
+                        tableName = "Criminal";
+                    }else if (table == 2){
+                        tableName = "Crime";
+                    }
+                    else if (table == 3)
                     {
-                        System.out.println();
-                        System.out.println("1. Криминално проявени лица"); // a.k.a Престъпник/таблица Criminal ;)
-                        System.out.println("2. Престъпление");
-                        System.out.println("3. Полицаи");
-                        System.out.println("4. Потърпевши");
-                        System.out.println("5. Полицейски Отдел");
-
-                        int table = scanner.nextInt();
-
-                        if(table == 1){
-                            tableName = "Criminal";
-                        }else if (table == 2){
-                            tableName = "Crime";
-                        }
-                        else if (table == 3)
-                        {
-                            tableName = "Policeofficer";
-                        }
-                        else if (table == 4)
-                        {
-                            tableName = "Victim";
-                        }
-                        else if (table == 5)
-                        {
-                            tableName ="Department";
-                        }
-                        else {
-                            break;
-                        }
-
-                        if(queriesExecutor.executeCaptainQueries(operation, tableName) == -1){
-                            break;
-                        }
+                        tableName = "Policeofficer";
+                    }
+                    else if (table == 4)
+                    {
+                        tableName = "Victim";
+                    }
+                    else if (table == 5)
+                    {
+                        tableName ="Department";
                     }
                     else {
-                        System.out.println();
-                        System.out.println("1. Криминално проявени лица"); // a.k.a Престъпник/таблица Criminal ;)
-                        System.out.println("2. Престъпление");
-                        System.out.println("3. Полицаи");
-                        System.out.println("4. Потърпевши");
-
-                        int table = scanner.nextInt();
-
-                        if(table == 1){
-                            tableName = "Criminal";
-                        }else if (table == 2){
-                            tableName = "Crime";
-                        }
-                        else if (table == 3)
-                        {
-                            tableName = "Policeofficer";
-                        }
-                        else if (table == 4)
-                        {
-                            tableName = "Victim";
-                        }
-                        else {
-                            break;
-                        }
-
-                        if(queriesExecutor.executeCaptainQueries(operation, tableName) == -1){
-                            break;
-                        }
+                        break;
                     }
 
+                    if(queriesExecutor.executeCaptainQueries(operation, tableName) == -1){
+                        break;
+                    }
 
                     System.out.println();
                     System.out.println("1. Преглед");
                     System.out.println("2. Добавяне");
                     System.out.println("3. Редактиране");
-                    System.out.println("4. Изход");
+                    System.out.println("4. Изтриване");
+                    System.out.println("5. Изход");
 
                     operation = scanner.nextInt();
+
                 }
                 scanner.close();
 
             }
-
-
         } catch (SQLException e) {
             System.out.println("Login error! Deputies have no access to the DB!"); // Deputy е заместник-няма права
         }
