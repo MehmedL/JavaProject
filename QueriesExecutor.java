@@ -304,15 +304,8 @@ public class QueriesExecutor {
         {
             UpdateExe updateExe = new UpdateExe(connection);
 
-            if(tableName == "Criminal"){
-                updateExe.updateCriminal();
-            }
-            else if(tableName == "Crime"){
+            if(tableName == "Crime"){
                 updateExe.updateCrime();
-            }
-            else if(tableName == "Victim")
-            {
-                updateExe.updateVictim();
             }
             else if(tableName == "Policeofficer")
             {
@@ -321,6 +314,7 @@ public class QueriesExecutor {
             } else {
                 System.out.println("Failed to update.");
             }
+            return operation;
         }
         else if (operation == 4)
         {
@@ -343,6 +337,7 @@ public class QueriesExecutor {
             } else {
                 System.out.println("Failed to delete.");
             }
+            return operation;
         }
         else if (operation == 5) return -1;
         scanner.close();

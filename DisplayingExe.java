@@ -20,9 +20,18 @@ public class DisplayingExe {
 
                     System.out.println();
 
-                    System.out.println("ID: " + id + ", Crime №: " + crimeNum + ", Crime Type: " + crimeType + ", Commit date: " + date
-                            + ", Closure: " + closure + ", Criminal ID: " + criminalId + ", Victim ID: " + victimId + ", Police Officer ID: " + officerId
-                            + ", Department ID: " + department);
+                    // Горна граница на таблицата
+                    System.out.println("+------+------------+-----------------+--------------+------------+--------------+------------+--------------------+----------------+");
+                    // Заглавен ред с имената на колоните
+                    System.out.printf("| %-4s | %-10s | %-15s | %-12s | %-10s | %-12s | %-10s | %-18s | %-14s |%n",
+                            "ID", "Crime №", "Crime Type", "Commit date", "Closure", "Criminal ID", "Victim ID", "Police Officer ID", "Department ID");
+                    // Разделителна линия под заглавния ред
+                    System.out.println("+------+------------+-----------------+--------------+------------+--------------+------------+--------------------+----------------+");
+                    // Ред с данни
+                    System.out.printf("| %-4d | %-10s | %-15s | %-12s | %-10s | %-12d | %-10d | %-18d | %-14d |%n",
+                            id, crimeNum, crimeType, date, closure, criminalId, victimId, officerId, department);
+                    // Долна граница на таблицата
+                    System.out.println("+------+------------+-----------------+--------------+------------+--------------+------------+--------------------+----------------+");
                 }
                 else if(tableName.equals("Victim"))
                 {
@@ -32,7 +41,11 @@ public class DisplayingExe {
 
                     System.out.println();
 
-                    System.out.println("ID: " + id + ", Victim №: " + victimNUM + ", PersonID: " + personID);
+                    System.out.println("+-----+---------------+----------+");
+                    System.out.printf("| %-3s | %-13s | %-8s |%n", "ID", "Victim №", "PersonID");
+                    System.out.println("+-----+---------------+----------+");
+                    System.out.printf("| %-3d | %-13s | %-8d |%n", id, victimNUM, personID);
+                    System.out.println("+-----+---------------+----------+");
                 }
                 else if(tableName.equals("Person"))
                 {
@@ -46,8 +59,18 @@ public class DisplayingExe {
 
                     System.out.println();
 
-                    System.out.println("ID: " + id + ", EGN: " + EGN + ", FirstName:" + firstName + ", MiddleName:" + middleName + ", LastName:" + lastName
-                    + ", BirthDate:" + birthDate + ", Sex:" + sex);
+                    // Отпечатване на линията на горната граница
+                    System.out.println("+-----+---------------+---------------+---------------+---------------+---------------+----------+");
+                    // Отпечатване на заглавния ред
+                    System.out.printf("| %-3s | %-13s | %-13s | %-13s | %-13s | %-13s | %-8s |%n",
+                            "ID", "EGN", "FirstName", "MiddleName", "LastName", "BirthDate", "Sex");
+                    // Отпечатване на разделителната линия
+                    System.out.println("+-----+---------------+---------------+---------------+---------------+---------------+----------+");
+                    // Отпечатване на реда с данни
+                    System.out.printf("| %-3d | %-13s | %-13s | %-13s | %-13s | %-13s | %-8s |%n",
+                            id, EGN, firstName, middleName, lastName, birthDate, sex);
+                    // Отпечатване на линията на долната граница
+                    System.out.println("+-----+---------------+---------------+---------------+---------------+---------------+----------+");
                 }
                 else if(tableName.equals("Policeofficer"))
                 {
@@ -59,8 +82,18 @@ public class DisplayingExe {
 
                     System.out.println();
 
-                    System.out.println("ID:" + id + ", OfficerBadgeNum:" + officerBadgeNum + ", OfficerRank:"
-                    + officerRank+ ", PersonId:" + personId + ", DepartmentId:" +departmentID );
+                    System.out.println("+-----+-----------------+---------------+------------+--------------+");
+                    // Отпечатване на заглавния ред
+                    System.out.printf("| %-3s | %-15s | %-13s | %-10s | %-12s |%n",
+                            "ID", "OfficerBadgeNum", "OfficerRank", "PersonId", "DepartmentId");
+                    // Отпечатване на разделителната линия
+                    System.out.println("+-----+-----------------+---------------+------------+--------------+");
+                    // Отпечатване на реда с данни
+                    System.out.printf("| %-3d | %-15s | %-13s | %-10d | %-12d |%n",
+                            id, officerBadgeNum, officerRank, personId, departmentID);
+                    // Отпечатване на линията на долната граница
+                    System.out.println("+-----+-----------------+---------------+------------+--------------+");
+
                 }
                 else if(tableName.equals("Criminal"))
                 {
@@ -70,7 +103,20 @@ public class DisplayingExe {
 
                     System.out.println();
 
-                    System.out.println("ID:" + id + ", CriminalNum:" + criminalNum + ", PersonID:" + personId);
+                    // Отпечатване на горната граница на таблицата
+                    System.out.println("+-----+---------------+-----------+");
+
+                    // Отпечатване на заглавния ред с имената на колоните
+                    System.out.printf("| %-3s | %-13s | %-9s |%n", "ID", "CriminalNum", "PersonID");
+
+                    // Отпечатване на разделителната линия
+                    System.out.println("+-----+---------------+-----------+");
+
+                    // Отпечатване на реда с данни (стойностите на променливите)
+                    System.out.printf("| %-3d | %-13s | %-9d |%n", id, criminalNum, personId);
+
+                    // Отпечатване на долната граница на таблицата
+                    System.out.println("+-----+---------------+-----------+");
 
                 }
                 else if(tableName.equals("Department"))
@@ -81,6 +127,15 @@ public class DisplayingExe {
                     System.out.println();
 
                     System.out.println("ID:" + id + ", Der" + ", DepartmentName:" + departmentName);
+                    // Примерни ширини за колоните:
+
+                    System.out.println("+-----+------------------+");
+                    // Отпечатване на заглавния ред с имената на колоните
+                    System.out.printf("| %-3s | %-16s |%n", "ID", "DepartmentName");
+                    System.out.println("+-----+------------------+");
+                    // Отпечатване на реда с данни
+                    System.out.printf("| %-3d | %-16s |%n", id, departmentName);
+                    System.out.println("+-----+------------------+");
                 }
                 else {
                     break;
@@ -93,4 +148,4 @@ public class DisplayingExe {
     }
 }
 
-// Готово
+// Готово с преправено принтиране.

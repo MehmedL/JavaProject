@@ -175,7 +175,7 @@ public class InsertionExe {
                 lastCrimeNum = rs.getString("CrimeNUM");
             }
         } catch (SQLException e) {
-            System.out.println("Грешка при извличане на последния CrimeNUM: " + e.getMessage());
+            System.out.println("Error retrieving latest CrimeNUM: " + e.getMessage());
         }
 
         if (lastCrimeNum == null) {
@@ -255,5 +255,5 @@ public class InsertionExe {
 
 }
 
-//Мисля че е готово Направи един преглед и ти за всеки случай да не съм изпуснал нещо
+// Готово преработено.
 
