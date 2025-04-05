@@ -39,7 +39,7 @@ public class InsertionExe {
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows == 0) {
-                throw new SQLException("Failed to insert into Person.");
+                throw new SQLException("Failed to insert into Person!");
             }
 
             try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
@@ -98,7 +98,6 @@ public class InsertionExe {
         // Генериране на уникален OfficerBadgeNUM
         String officerBadgeNum = generateOfficerBadgeNUM();
 
-        // SQL заявка за вмъкване в таблицата PoliceOfficer
         String insertOfficerSQL = "INSERT INTO PoliceOfficer (OfficerBadgeNUM, OfficerRank, PersonID, DepartmentID) VALUES (?, ?, ?, ?)";
 
         try (PreparedStatement pstmt = connection.prepareStatement(insertOfficerSQL)) {
@@ -154,12 +153,12 @@ public class InsertionExe {
 
                 int affectedRows = pstmt.executeUpdate();
                 if (affectedRows == 0) {
-                    throw new SQLException("Failed to insert into Crime.");
+                    throw new SQLException("Failed to insert into Crime!");
                 }
 
             }
         }catch (SQLException e) {
-            e.printStackTrace();  // Log the error
+            e.printStackTrace();
         }
         return -1;
     }
@@ -182,7 +181,6 @@ public class InsertionExe {
             return "CR0000001";
         }
 
-        // Предполагаме, че CrimeNUM има формат "CR" последван от 7 цифри.
         int lastNum = Integer.parseInt(lastCrimeNum.substring(2));
         return String.format("CR%07d", lastNum + 1);
     }
@@ -255,5 +253,4 @@ public class InsertionExe {
 
 }
 
-// Готово преработено.
 

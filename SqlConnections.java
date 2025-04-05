@@ -9,8 +9,6 @@ public class SqlConnections {
 
     public void connection(String username, String password) {
         try (Connection connection = DriverManager.getConnection(GlobalConsts.URL, username, password)) {
-            //System.out.println("Connected to the database successfully!");
-
             QueriesExecutor queriesExecutor = new QueriesExecutor(connection);
 
             String role = queriesExecutor.getCurrentRole();
@@ -22,10 +20,10 @@ public class SqlConnections {
                 Scanner scanner = new Scanner(System.in);
 
                 System.out.println();
-                System.out.println("1. Преглед");
-                System.out.println("2. Добавяне");
-                System.out.println("3. Редактиране");
-                System.out.println("4. Изход");
+                System.out.println("1. View");
+                System.out.println("2. Add new");
+                System.out.println("3. Update");
+                System.out.println("4. Exit");
 
                 int operation = scanner.nextInt();
                 String tableName = "";
@@ -33,8 +31,8 @@ public class SqlConnections {
                 while (operation != 4){ // Докато не е избран 4. Изход, могат да се правят промени
 
                     System.out.println();
-                    System.out.println("1. Криминално проявени лица"); // a.k.a Престъпник/таблица Criminal ;)
-                    System.out.println("2. Престъпление");
+                    System.out.println("1. Criminal Offenders");
+                    System.out.println("2. Crimes");
 
                     int table = scanner.nextInt();
 
@@ -52,10 +50,10 @@ public class SqlConnections {
                     }
 
                     System.out.println();
-                    System.out.println("1. Преглед");
-                    System.out.println("2. Добавяне");
-                    System.out.println("3. Редактиране");
-                    System.out.println("4. Изход");
+                    System.out.println("1. View");
+                    System.out.println("2. Add new");
+                    System.out.println("3. Update");
+                    System.out.println("4. Exit");
 
                     operation = scanner.nextInt();
                 }
@@ -66,12 +64,12 @@ public class SqlConnections {
                 Scanner scanner = new Scanner(System.in);
 
                 System.out.println();
-                System.out.println("1. Преглед");
-                System.out.println("2. Редактиране");
-                System.out.println("3. Изход");
+                System.out.println("1. View");
+                System.out.println("2. Update");
+                System.out.println("3. Exit");
 
                 int operation = scanner.nextInt();
-                String tableName = "Crime"; // Винаги работим с "Crime"
+                String tableName = "Crime";
 
                 while (operation != 3) { // Докато не е избран 3. Изход, могат да се правят промени
                     if (queriesExecutor.executeInspectorQueries(operation, tableName) == -1) {
@@ -79,9 +77,9 @@ public class SqlConnections {
                     }
 
                     System.out.println();
-                    System.out.println("1. Преглед");
-                    System.out.println("2. Редактиране");
-                    System.out.println("3. Изход");
+                    System.out.println("1. View");
+                    System.out.println("2. Update");
+                    System.out.println("3. Exit");
 
                     operation = scanner.nextInt();
                 }
@@ -92,11 +90,11 @@ public class SqlConnections {
                 Scanner scanner = new Scanner(System.in);
 
                 System.out.println();
-                System.out.println("1. Преглед");
-                System.out.println("2. Добавяне");
-                System.out.println("3. Редактиране");
-                System.out.println("4. Изтриване");
-                System.out.println("5. Изход");
+                System.out.println("1. View");
+                System.out.println("2. Add new");
+                System.out.println("3. Update");
+                System.out.println("4. Delete");
+                System.out.println("5. Exit");
 
                 int operation = scanner.nextInt();
                 String tableName = "";
@@ -106,11 +104,11 @@ public class SqlConnections {
                     if(operation == 1)
                     {
                         System.out.println();
-                        System.out.println("1. Криминално проявени лица"); // a.k.a Престъпник/таблица Criminal ;)
-                        System.out.println("2. Престъпление");
-                        System.out.println("3. Полицаи");
-                        System.out.println("4. Потърпевши");
-                        System.out.println("5. Полицейски Отдел");
+                        System.out.println("1. Criminal Offenders");
+                        System.out.println("2. Crimes");
+                        System.out.println("3. Police Officers");
+                        System.out.println("4. Victims");
+                        System.out.println("5. Police Departments");
 
                         int table = scanner.nextInt();
 
@@ -142,8 +140,8 @@ public class SqlConnections {
                     else if(operation == 3)
                     {
                         System.out.println();
-                        System.out.println("1. Престъпление");
-                        System.out.println("2. Полицаи");
+                        System.out.println("1. Crimes");
+                        System.out.println("2. Police Officers");
 
 
                         int table = scanner.nextInt();
@@ -163,10 +161,10 @@ public class SqlConnections {
                     }
                     else {
                         System.out.println();
-                        System.out.println("1. Криминално проявени лица"); // a.k.a Престъпник/таблица Criminal ;)
-                        System.out.println("2. Престъпление");
-                        System.out.println("3. Полицаи");
-                        System.out.println("4. Потърпевши");
+                        System.out.println("1. Criminal Offenders");
+                        System.out.println("2. Crimes");
+                        System.out.println("3. Police Officers");
+                        System.out.println("4. Victims");
 
                         int table = scanner.nextInt();
 
@@ -194,11 +192,11 @@ public class SqlConnections {
 
 
                     System.out.println();
-                    System.out.println("1. Преглед");
-                    System.out.println("2. Добавяне");
-                    System.out.println("3. Редактиране");
-                    System.out.println("4. Изтриване");
-                    System.out.println("5. Изход");
+                    System.out.println("1. View");
+                    System.out.println("2. Add new");
+                    System.out.println("3. Update");
+                    System.out.println("4. Delete");
+                    System.out.println("5. Exit");
 
                     operation = scanner.nextInt();
                 }
@@ -212,5 +210,3 @@ public class SqlConnections {
         }
     }
 }
-
-// Да преправя за проверка кое действие ще се извършва.

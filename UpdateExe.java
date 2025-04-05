@@ -17,7 +17,7 @@ public class UpdateExe {
 
         System.out.println("Нов Officer Rank: ");
         String officerRank = scanner.nextLine();
-        // Забележете, че премахваме частта, която актуализира PersonID, защото тя не трябва да се променя.
+
         System.out.println("Нов DepartmentID: ");
         int departmentId = Integer.parseInt(scanner.nextLine());
 
@@ -26,6 +26,7 @@ public class UpdateExe {
         try (PreparedStatement pstmt = connection.prepareStatement(updateOfficerSQL)) {
             pstmt.setString(1, officerRank);
             pstmt.setInt(2, departmentId);
+            pstmt.setString(3, officerBadgeNum);
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
@@ -38,21 +39,22 @@ public class UpdateExe {
         }
     }
 
-    // Метод за актуализиране на запис в таблицата Crime (тук PersonID не фигурира, така че кодът остава непроменен)
     public void updateCrime() {
         Scanner scanner = new Scanner(System.in);
         System.out.print("Въведете CrimeNUM за обновяване: ");
         String crimeNum = scanner.nextLine();
 
-        System.out.println("Нова Closure: ");
+        System.out.println("Нов Closure: ");
         String closure = scanner.nextLine();
 
         String updateCrimeSQL = "UPDATE Crime SET Closure = ? WHERE CrimeNUM = ?";
 
         try (PreparedStatement pstmt = connection.prepareStatement(updateCrimeSQL)) {
             pstmt.setString(1, closure);
+            pstmt.setString(2, crimeNum);
 
             int affectedRows = pstmt.executeUpdate();
+
             if (affectedRows > 0) {
                 System.out.println("Записът от таблицата Crime е успешно обновен.");
             } else {
@@ -63,5 +65,3 @@ public class UpdateExe {
         }
     }
 }
-
-// Махам Update за Criminal and Victim.
