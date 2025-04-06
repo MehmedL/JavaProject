@@ -39,13 +39,7 @@ public class QueriesExecutor {
 
             System.out.println();
 
-            while (rs.next()) {
-                int id = rs.getInt("ID");
-                String criminalNum = rs.getString("CriminalNUM");
-                int personId = rs.getInt("PersonID");
-
-                System.out.println("ID: " + id + ", CriminalNUM: " + criminalNum + ", PersonID: " + personId);
-            }// Вместо това да се извиква printTable за таблица Criminal
+            DisplayingExe.printTable(rs, "Criminal");
         } catch (SQLException e) {
             System.out.println("Error while executing the query.");
         }
@@ -53,7 +47,7 @@ public class QueriesExecutor {
 
     // Метод за изпълнение на заявките за "Lieutenant" роля
     public int executeLieutenantQueries(int operation, String tableName) {
-        if (operation < 1 && operation > 4) {
+        if (operation < 1 || operation > 3) {
             System.out.println("Invalid operation!");
             return -1;
         }
@@ -104,8 +98,6 @@ public class QueriesExecutor {
 
                 if (crimeId != -1) {
                     System.out.println("Crime successfully added with ID: " + crimeId);
-                } else {
-                    System.out.println("Failed to add crime.");
                 }
             }
 
@@ -114,10 +106,7 @@ public class QueriesExecutor {
             if (personId != -1) {
                 if(tableName == "Criminal") {
                     insertionExe.insertCriminal(personId);
-                }
-                else if (tableName == "Crime")
-                {
-                    insertionExe.insertCrime();
+                    return personId;
                 }
             } else {
                 System.out.println("Failed to insert person.");
@@ -125,14 +114,14 @@ public class QueriesExecutor {
 
             return operation;
         }
-        else if (operation == 4) return -1;
+        else if (operation == 3) return -1;
         scanner.close();
         return -1;
     }
 
     // Метод за изпълнение на заявките за "Inspector" роля
     public int executeInspectorQueries(int operation, String tableName) {
-        if (operation < 1 && operation > 3) {
+        if (operation < 1 || operation > 3) {
             System.out.println("Invalid operation!");
             return -1;
         }
@@ -141,9 +130,7 @@ public class QueriesExecutor {
             System.out.println("Invalid table name!");
             return -1;
         }
-
         Scanner scanner = new Scanner(System.in);
-
         String InspectorQuery = "";
 
         if (operation == 1) {
@@ -162,19 +149,11 @@ public class QueriesExecutor {
             return operation;
         }
         else if (operation == 2) {
-            InsertionExe insertionExe = new InsertionExe(connection);
+            UpdateExe updateExe = new UpdateExe(connection);
 
-            // Въвеждаме нов човек и получаваме неговото ID
-            int personId = insertionExe.insertPerson();
-
-            // Ако успешно сме въвели човек го добавяме
-            if (personId != -1) {
-                insertionExe.insertCrime();
-            } else {
-                System.out.println("Failed to insert person!");
+            if(tableName.equals("Crime")){
+                updateExe.updateCrime();
             }
-
-            return operation;
         }
         else if (operation == 3) return -1;
         scanner.close();
@@ -183,7 +162,7 @@ public class QueriesExecutor {
 
     // Метод за изпълнение на заявките за "Captain" роля
     public int executeCaptainQueries(int operation, String tableName) {
-        if (operation < 1 && operation > 5) {
+        if (operation < 1 || operation > 5) {
             System.out.println("Invalid operation!");
             return -1;
         }
@@ -194,7 +173,6 @@ public class QueriesExecutor {
         }
 
         Scanner scanner = new Scanner(System.in);
-
         String CaptainQuery = "";
 
         if (operation == 1) {
@@ -205,7 +183,6 @@ public class QueriesExecutor {
                      ResultSet rs = pstmt.executeQuery()) {
 
                     System.out.println();
-
                     DisplayingExe.printTable(rs, tableName);
                 } catch (SQLException e) {
                     System.out.println("Error while executing the query!");

@@ -139,7 +139,8 @@ public class InsertionExe {
 
             String CrimeNUM = generateCrimeNum();
 
-            String insertCrimeSQL = "INSERT INTO Crime (CrimeNUM, CrimeType, CommitDate, Closure, CriminalID, VictimID, PoliceOfficerID, DepartmentID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+            String insertCrimeSQL = "INSERT INTO Crime (CrimeNUM, CrimeType, CommitDate, Closure, CriminalID, VictimID, PoliceOfficerID, " +
+                    "DepartmentID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
             try (PreparedStatement pstmt = connection.prepareStatement(insertCrimeSQL, PreparedStatement.RETURN_GENERATED_KEYS)) {
                 pstmt.setString(1, CrimeNUM);
@@ -250,7 +251,4 @@ public class InsertionExe {
         int lastNum = Integer.parseInt(lastOfficerBadgeNum.substring(1));
         return String.format("B%07d", lastNum + 1);
     }
-
 }
-
-

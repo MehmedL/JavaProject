@@ -12,13 +12,13 @@ public class UpdateExe {
     // Метод за актуализиране на запис в таблицата PoliceOfficer
     public void updatePoliceOfficer() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Въведете OfficerBadgeNUM за обновяване: ");
+        System.out.print("Insert OfficerBadgeNUM to be updated: ");
         String officerBadgeNum = scanner.nextLine();
 
-        System.out.println("Нов Officer Rank: ");
+        System.out.println("New Officer Rank: ");
         String officerRank = scanner.nextLine();
 
-        System.out.println("Нов DepartmentID: ");
+        System.out.println("New DepartmentID: ");
         int departmentId = Integer.parseInt(scanner.nextLine());
 
         String updateOfficerSQL = "UPDATE PoliceOfficer SET OfficerRank = ?, DepartmentID = ? WHERE OfficerBadgeNUM = ?";
@@ -30,21 +30,21 @@ public class UpdateExe {
 
             int affectedRows = pstmt.executeUpdate();
             if (affectedRows > 0) {
-                System.out.println("Записът от таблицата PoliceOfficer е успешно обновен.");
+                System.out.println("Successfully updated PoliceOfficer record!");
             } else {
-                System.out.println("Не е намерен запис с OfficerBadgeNUM: " + officerBadgeNum);
+                System.out.println("Record not found, OfficerBadgeNUM: " + officerBadgeNum);
             }
         } catch (SQLException e) {
-            System.out.println("Грешка при обновяване на PoliceOfficer: " + e.getMessage());
+            System.out.println("Could not update record with PoliceOfficer: " + e.getMessage());
         }
     }
 
     public void updateCrime() {
         Scanner scanner = new Scanner(System.in);
-        System.out.print("Въведете CrimeNUM за обновяване: ");
+        System.out.print("New CrimeNUM to be updated: ");
         String crimeNum = scanner.nextLine();
 
-        System.out.println("Нов Closure: ");
+        System.out.println("New Closure: ");
         String closure = scanner.nextLine();
 
         String updateCrimeSQL = "UPDATE Crime SET Closure = ? WHERE CrimeNUM = ?";
@@ -56,12 +56,12 @@ public class UpdateExe {
             int affectedRows = pstmt.executeUpdate();
 
             if (affectedRows > 0) {
-                System.out.println("Записът от таблицата Crime е успешно обновен.");
+                System.out.println("Successfully updated Crime record!");
             } else {
-                System.out.println("Не е намерен запис с CrimeNUM: " + crimeNum);
+                System.out.println("Not found record with CrimeNUM: " + crimeNum);
             }
         } catch (SQLException e) {
-            System.out.println("Грешка при обновяване на Crime: " + e.getMessage());
+            System.out.println("Could not update Crime: " + e.getMessage());
         }
     }
 }

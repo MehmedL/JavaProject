@@ -1,9 +1,7 @@
 import java.util.Scanner;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-
 
 public class SqlConnections {
 
@@ -22,13 +20,12 @@ public class SqlConnections {
                 System.out.println();
                 System.out.println("1. View");
                 System.out.println("2. Add new");
-                System.out.println("3. Update");
-                System.out.println("4. Exit");
+                System.out.println("3. Exit");
 
                 int operation = scanner.nextInt();
                 String tableName = "";
 
-                while (operation != 4){ // Докато не е избран 4. Изход, могат да се правят промени
+                while (operation != 3){ // Докато не е избран 3. Изход, могат да се правят промени
 
                     System.out.println();
                     System.out.println("1. Criminal Offenders");
@@ -52,13 +49,11 @@ public class SqlConnections {
                     System.out.println();
                     System.out.println("1. View");
                     System.out.println("2. Add new");
-                    System.out.println("3. Update");
-                    System.out.println("4. Exit");
+                    System.out.println("3. Exit");
 
                     operation = scanner.nextInt();
                 }
                 scanner.close();
-
             }
             else if(role != null && role.equals("`Inspector`@`%`")){
                 Scanner scanner = new Scanner(System.in);
