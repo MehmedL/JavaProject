@@ -98,7 +98,7 @@ public class QueriesExecutor {
 
                 if (crimeId != -1) {
                     System.out.println("Crime successfully added with ID: " + crimeId);
-                }
+                }return crimeId;
             }
 
             int personId = insertionExe.insertPerson();
@@ -111,8 +111,6 @@ public class QueriesExecutor {
             } else {
                 System.out.println("Failed to insert person.");
             }
-
-            return operation;
         }
         else if (operation == 3) return -1;
         scanner.close();
